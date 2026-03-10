@@ -157,6 +157,7 @@ Item { // Bar content region
         TopBarCapsule {
             id: rightCapsule
             outlineOnly: true
+            showBackground: false
             anchors {
                 right: parent.right
                 verticalCenter: parent.verticalCenter

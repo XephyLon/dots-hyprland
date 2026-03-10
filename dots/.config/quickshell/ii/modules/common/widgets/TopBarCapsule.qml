@@ -12,11 +12,12 @@ Rectangle {
     property alias layoutDirection: layout.layoutDirection
 
     property bool showBackground: Config.options.bar.showBackground
+    property bool outlineOnly: false
 
     radius: height / 2
-    color: showBackground ? Appearance.colors.colLayer0 : "transparent"
-    border.width: showBackground && Config.options.bar.cornerStyle === 1 ? 1 : 0
-    border.color: Appearance.colors.colLayer0Border
+    color: showBackground && !outlineOnly ? Appearance.colors.colLayer0 : "transparent"
+    border.width: outlineOnly ? 1 : (showBackground && Config.options.bar.cornerStyle === 1 ? 1 : 0)
+    border.color: outlineOnly ? Appearance.colors.colOnLayer1 : Appearance.colors.colLayer0Border
 
     implicitWidth: layout.implicitWidth + height // padding matches radius on both sides
     implicitHeight: Appearance.sizes.baseBarHeight - (Config.options.bar.cornerStyle === 1 ? 0 : 8)
