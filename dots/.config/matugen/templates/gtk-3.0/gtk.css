@@ -36,3 +36,8 @@
 @define-color popover_fg_color {{colors.on_surface.default.hex}};
 @define-color dialog_bg_color {{colors.surface_container_high.default.hex}};
 @define-color dialog_fg_color {{colors.on_surface.default.hex}};
+
+/* Force sharp corners for Arknights Endfield aesthetic */
+window, dialog, button, box, entry, label, tooltip, popover, menu, headerbar {
+    border-radius: 0px !important;
+}

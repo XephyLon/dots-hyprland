@@ -199,16 +199,16 @@ Singleton {
     }
 
     rounding: QtObject {
-        property int unsharpen: 2
-        property int unsharpenmore: 6
-        property int verysmall: 8
-        property int small: 12
-        property int normal: 17
-        property int large: 23
-        property int verylarge: 30
-        property int full: 9999
-        property int screenRounding: large
-        property int windowRounding: 18
+        property int unsharpen: 0
+        property int unsharpenmore: 0
+        property int verysmall: 0
+        property int small: 0
+        property int normal: 0
+        property int large: 0
+        property int verylarge: 0
+        property int full: 0
+        property int screenRounding: 0
+        property int windowRounding: 0
     }
 
     font: QtObject {
