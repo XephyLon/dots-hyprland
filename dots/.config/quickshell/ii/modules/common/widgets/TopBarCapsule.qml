@@ -35,7 +35,6 @@ Rectangle {
     RowLayout {
         id: layout
         anchors.centerIn: parent
-        height: root.height
         spacing: 8
     }
 }
