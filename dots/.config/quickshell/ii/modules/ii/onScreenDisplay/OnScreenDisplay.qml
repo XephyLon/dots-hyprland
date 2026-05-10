@@ -29,6 +29,10 @@ Scope {
             id: "gamma",
             sourceUrl: "indicators/GammaIndicator.qml"
         },
+        {
+            id: "keyboardLayout",
+            sourceUrl: "indicators/KeyboardLayoutIndicator.qml"
+        },
     ]
 
     function triggerOsd() {
@@ -61,6 +65,16 @@ Scope {
         function onGammaChangeAttempt() {
             root.protectionMessage = "";
             root.currentIndicator = "gamma";
+            root.triggerOsd();
+        }
+    }
+
+    Connections {
+        target: HyprlandXkb
+        function onCurrentLayoutNameChanged() {
+            if (HyprlandXkb.layoutCodes.length <= 1) return;
+            root.protectionMessage = "";
+            root.currentIndicator = "keyboardLayout";
             root.triggerOsd();
         }
     }
