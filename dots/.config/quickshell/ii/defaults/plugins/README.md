@@ -51,3 +51,12 @@ Supported families: `"ii"`, `"waffle"`.
 
 - Plugins are loaded dynamically and reloaded when files are added/removed.
 - A plugin can define any Quickshell items it needs (for example `PanelWindow`, `Scope`, etc.).
+
+## Material 3 design guidance
+
+To stay consistent with illogical-impulse UI, plugin UIs should follow Material 3 principles:
+
+- Use shell theme tokens (for example `Appearance.m3colors`, `Appearance.font`, `Appearance.rounding`) instead of hardcoded values.
+- Prefer semantic surface/primary/on-surface color roles over arbitrary custom colors.
+- Preserve accessibility: strong contrast, readable text sizing, and predictable interaction states.
+- Keep spacing, hierarchy, and motion subtle and consistent with existing shell components.

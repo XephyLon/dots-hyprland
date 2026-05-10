@@ -30,7 +30,6 @@ ShellRoot {
         Cliphist.refresh()
         Wallpapers.load()
         Updates.load()
-        Plugins.load()
     }
 
 
