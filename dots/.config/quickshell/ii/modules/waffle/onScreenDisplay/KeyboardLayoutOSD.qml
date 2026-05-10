@@ -7,7 +7,7 @@ import qs.modules.waffle.looks
 WBarAttachedPanelContent {
     id: root
 
-    property Timer timer: Timer {
+    Timer {
         id: autoCloseTimer
         running: true
         interval: Config.options.osd.timeout
@@ -20,7 +20,7 @@ WBarAttachedPanelContent {
     Connections {
         target: HyprlandXkb
         function onCurrentLayoutNameChanged() {
-            root.timer.restart();
+            autoCloseTimer.restart();
         }
     }
 
