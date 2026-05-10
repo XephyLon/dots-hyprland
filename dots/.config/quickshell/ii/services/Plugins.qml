@@ -7,8 +7,6 @@ import Qt.labs.folderlistmodel
 Singleton {
     id: root
 
-    function load() {}
-
     function ensureFileUrl(path) {
         const pathString = `${path ?? ""}`;
         if (pathString.startsWith("file://")) {
