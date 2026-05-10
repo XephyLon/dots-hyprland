@@ -25,6 +25,11 @@ Scope {
             sourceUrl: "BrightnessOSD.qml",
             globalStateValue: "osdBrightnessOpen"
         },
+        {
+            id: "keyboardLayout",
+            sourceUrl: "KeyboardLayoutOSD.qml",
+            globalStateValue: "osdKeyboardLayoutOpen"
+        },
     ]
 
     function triggerBrightnessOsd() {
@@ -35,6 +40,11 @@ Scope {
     function triggerVolumeOSD() {
         root.currentIndicator = "volume";
         GlobalStates.osdVolumeOpen = true;
+    }
+
+    function triggerKeyboardLayoutOSD() {
+        root.currentIndicator = "keyboardLayout";
+        GlobalStates.osdKeyboardLayoutOpen = true;
     }
 
     // Listen to brightness changes
@@ -58,6 +68,15 @@ Scope {
         }
     }
 
+    // Listen to keyboard layout changes
+    Connections {
+        target: HyprlandXkb
+        function onCurrentLayoutNameChanged() {
+            if (HyprlandXkb.layoutCodes.length <= 1) return;
+            root.triggerKeyboardLayoutOSD();
+        }
+    }
+
     // Open when global state changes
     Connections {
         target: GlobalStates
@@ -68,6 +87,10 @@ Scope {
         }
         function onOsdVolumeOpenChanged() {
             if (GlobalStates.osdVolumeOpen)
+                panelLoader.active = true;
+        }
+        function onOsdKeyboardLayoutOpenChanged() {
+            if (GlobalStates.osdKeyboardLayoutOpen)
                 panelLoader.active = true;
         }
     }

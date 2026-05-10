@@ -57,6 +57,22 @@ ShellRoot {
         component: WaffleFamily {}
     }
 
+    Repeater {
+        model: Plugins.discoveredPlugins
+
+        Loader {
+            required property var modelData
+            active: Config.ready && modelData.families.includes(Config.options.panelFamily)
+            source: modelData.source
+            asynchronous: true
+            onStatusChanged: {
+                if (status === Loader.Error) {
+                    print(`[Plugins] Failed to load plugin "${modelData.id}" from ${modelData.source}: ${errorString}`)
+                }
+            }
+        }
+    }
+
 
     // Shortcuts
     IpcHandler {
@@ -74,4 +90,3 @@ ShellRoot {
         onPressed: root.cyclePanelFamily()
     }
 }
-
