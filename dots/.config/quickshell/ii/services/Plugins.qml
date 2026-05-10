@@ -7,6 +7,11 @@ import Qt.labs.folderlistmodel
 Singleton {
     id: root
 
+    readonly property bool pluginsEnabled: Config.options?.plugins?.enable ?? false
+    readonly property list<string> disabledPlugins: Config.options?.plugins?.disabled ?? []
+    readonly property list<var> configuredFamilyMap: Config.options?.plugins?.familyMap ?? []
+    property list<var> discoveredPlugins: []
+
     function ensureFileUrl(path) {
         const pathString = `${path ?? ""}`;
         if (pathString.startsWith("file://")) {
@@ -23,8 +28,7 @@ Singleton {
     }
 
     function getFamiliesForPlugin(pluginId) {
-        const familyMap = Config.options?.plugins?.familyMap ?? [];
-        for (const entry of familyMap) {
+        for (const entry of configuredFamilyMap) {
             if (entry?.id === pluginId) {
                 const normalized = normalizeFamilies(entry.families);
                 if (normalized.length > 0) {
@@ -36,11 +40,11 @@ Singleton {
     }
 
     function shouldLoadPlugin(pluginId) {
-        if (!Config.options?.plugins?.enable) return false;
-        return !(Config.options?.plugins?.disabled ?? []).includes(pluginId);
+        if (!pluginsEnabled) return false;
+        return !disabledPlugins.includes(pluginId);
     }
 
-    readonly property list<var> discoveredPlugins: {
+    function rebuildDiscoveredPlugins() {
         const discovered = [];
         for (let i = 0; i < pluginsFolder.count; i++) {
             const fileName = pluginsFolder.get(i, "fileName");
@@ -53,18 +57,36 @@ Singleton {
             discovered.push({
                 "id": pluginId,
                 "families": getFamiliesForPlugin(pluginId),
-                "source": ensureFileUrl(filePath),
+                    "source": ensureFileUrl(filePath),
             });
         }
-        return discovered;
+        root.discoveredPlugins = discovered;
     }
 
     FolderListModel {
         id: pluginsFolder
-        folder: Qt.resolvedUrl(Directories.userPlugins)
+        folder: ensureFileUrl(Directories.userPlugins)
         showDirs: false
         showHidden: false
         nameFilters: ["*.qml"]
         sortField: FolderListModel.Name
+        onCountChanged: root.rebuildDiscoveredPlugins()
+    }
+
+    Connections {
+        target: root
+        function onPluginsEnabledChanged() {
+            root.rebuildDiscoveredPlugins()
+        }
+        function onDisabledPluginsChanged() {
+            root.rebuildDiscoveredPlugins()
+        }
+        function onConfiguredFamilyMapChanged() {
+            root.rebuildDiscoveredPlugins()
+        }
+    }
+
+    Component.onCompleted: {
+        root.rebuildDiscoveredPlugins()
     }
 }

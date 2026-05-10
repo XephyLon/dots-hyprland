@@ -67,7 +67,7 @@ ShellRoot {
             asynchronous: true
             onStatusChanged: {
                 if (status === Loader.Error) {
-                    print(`[Plugins] Failed to load plugin "${modelData.id}" from ${source}: ${errorString()}`)
+                    print(`[Plugins] Failed to load plugin "${modelData.id}" from ${modelData.source}: ${errorString}`)
                 }
             }
         }
