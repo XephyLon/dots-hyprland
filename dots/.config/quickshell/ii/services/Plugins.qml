@@ -58,7 +58,7 @@ Singleton {
             discovered.push({
                 "id": pluginId,
                 "families": getFamiliesForPlugin(pluginId),
-                    "source": ensureFileUrl(filePath),
+                "source": ensureFileUrl(filePath),
             });
         }
         root.discoveredPlugins = discovered;
