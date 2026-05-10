@@ -578,6 +578,13 @@ Singleton {
                 property int adviseUpdateThreshold: 75 // packages
                 property int stronglyAdviseUpdateThreshold: 200 // packages
             }
+
+            property JsonObject plugins: JsonObject {
+                property bool enable: false
+                property list<string> disabled: []
+                // Optional: [{ "id": "MyPlugin", "families": ["ii"] }]
+                property list<var> familyMap: []
+            }
             
             property JsonObject wallpaperSelector: JsonObject {
                 property bool useSystemFileDialog: false
