@@ -25,10 +25,19 @@ ContentPage {
             text: Config.options.plugins.disabled.join(", ")
             wrapMode: TextEdit.Wrap
             onTextChanged: {
-                Config.options.plugins.disabled = text
-                .split(",")
-                .map(id => id.trim())
-                .filter(id => id.length > 0);
+                updateDisabledPluginsTimer.restart();
+            }
+
+            Timer {
+                id: updateDisabledPluginsTimer
+                interval: 500
+                repeat: false
+                onTriggered: {
+                    Config.options.plugins.disabled = parent.text
+                    .split(",")
+                    .map(id => id.trim())
+                    .filter(id => id.length > 0);
+                }
             }
         }
 
