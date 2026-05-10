@@ -6,6 +6,7 @@ import qs.services
 
 ContentPage {
     forceWidth: true
+    property string disabledPluginsDraft: Config.options.plugins.disabled.join(", ")
 
     ContentSection {
         icon: "extension"
@@ -22,9 +23,10 @@ ContentPage {
         MaterialTextArea {
             Layout.fillWidth: true
             placeholderText: Translation.tr("Disabled plugin IDs (comma-separated)")
-            text: Config.options.plugins.disabled.join(", ")
+            text: disabledPluginsDraft
             wrapMode: TextEdit.Wrap
             onTextChanged: {
+                disabledPluginsDraft = text;
                 updateDisabledPluginsTimer.restart();
             }
 
@@ -33,7 +35,7 @@ ContentPage {
                 interval: 500
                 repeat: false
                 onTriggered: {
-                    Config.options.plugins.disabled = parent.text
+                    Config.options.plugins.disabled = disabledPluginsDraft
                     .split(",")
                     .map(id => id.trim())
                     .filter(id => id.length > 0);
